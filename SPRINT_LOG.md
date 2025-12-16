@@ -1,43 +1,66 @@
-# Sprint Demo Report: Fundação, Arquitetura e Cultura de Inovação
+# 📜 SPRINT LOG & ARCHITECTURAL JOURNEY | SQUAD 17
 
-Olá a todos! 👋
+> **Documento Vivo:** Este log registra a evolução estratégica, técnica e cultural do projeto **ChurnInsight**. Aqui documentamos não apenas o código, mas as decisões de arquitetura e governança tomadas pela liderança e pelo time.
 
-A Squad 17 (NEXT HORIZON) encerra sua primeira semana (Semana 0) com sentimento de dever cumprido e a energia lá em cima! Realizamos nossa Sprint Demo hoje (11/12), consolidando nossa base técnica e alinhando nossa cultura de trabalho para o Hackathon ONE.
+---
 
-Abaixo, o resumo executivo das nossas entregas e definições:
+## 🗓️ SPRINT 01: Planning & Arquitetura Híbrida
+**Data:** 15 de Dezembro de 2025 | **Fase:** Definição Arquitetural & Início do Code
 
-1. **🏗️ Fundação Técnica & Governança (Liderança Técnica)**  
-   Sob a facilitação de Philipe Oliveira, estruturamos nossa "fábrica de software" adotando padrões de mercado desde o dia 1:  
-   
-   - **Documentação Viva**: Aprovamos o `ONBOARDING.md` (nosso guia interno de sobrevivência ágil) e o `README.md` oficial, que foi elevado ao nível de um Whitepaper Técnico, detalhando nossa arquitetura de microsserviços e a estratégia de deploy.  
-   - **Governança**: Implementamos regras de proteção de branch (`main`), Code Review obrigatório e um fluxo de Git profissional (Git Flow).  
-   - **Multidisciplinaridade**: Para garantir a velocidade do MVP, Philipe (originalmente Data Science) se voluntariou para cobrir lacunas de Frontend e DevOps, garantindo que o excelente trabalho do Backend e de Dados tenha onde rodar e ser visualizado.
+### 🚀 Resumo Executivo
+Nesta Planning, elevamos o nível de maturidade do projeto. Para mitigar riscos de integração e garantir o 1º lugar, definimos uma **Estratégia Híbrida de Dados** e uma arquitetura de desenvolvimento desacoplada (**Mock-First**). O objetivo é garantir que Backend e Data Science caminhem em paralelo sem bloqueios.
 
-2. **🧠 Cultura de Inovação & AI-Driven**  
-   Durante nossa daily pré-Demo, realizamos um brainstorming estratégico. Philipe, aplicando conceitos de sua especialização em Arquitetura de Soluções e Automação Inteligente, provocou o time a pensar: *"Como podemos ir além do requisito básico?"*.  
-   
-   **O Resultado**: Decidimos que o ChurnInsight não será apenas um previsor de cancelamento. Vamos explorar a fronteira da **Agentic AI**, integrando modelos generativos para criar planos de retenção autônomos.  
-   
-   **O Objetivo**: Estimular a criatividade e a cultura disruptiva no time, incentivando cada membro a evoluir suas hard skills explorando novas tecnologias na prática.
+### 🏛️ Decisões Estratégicas (C-Level)
 
-3. **👥 O Time (Nossos Protagonistas)**  
-   Este projeto ganha vida graças à curiosidade e ação rápida de cada membro ativo. O reconhecimento da semana vai para:  
-   
-   - **Felipe Oliveira dos Santos (Backend)**: Pela iniciativa rápida em subir o esqueleto do Spring Boot e estruturar a arquitetura Java.  
-   - **Lucas Bandeira Ferreira (Backend)**: Pela colaboração constante e disponibilidade imediata para pair programming.  
-   - **Raiuri Pinto (Backend)**: Pela energia em buscar soluções, alinhar a complexidade do código e liderar a frente de Backend.  
-   - **ROMULO MACHADO (Backend/Front)**: Pela visão híbrida e apoio fundamental na integração das pontas.  
-   - **Vlademir Ribeiro (Data Science)**: Pela paixão em transformar dados brutos em insights e puxar a análise exploratória (EDA).
+#### 1. A Estratégia "Híbrida" (O Diferencial Competitivo)
+Decidimos não depender apenas do dataset padrão (IBM Telco). O ChurnInsight atuará em duas camadas:
+* **Motor Preditivo (Compliance):** Modelo treinado no dataset oficial da IBM para prever o *Churn Score* (Quem sai?).
+* **Motor Consultivo (Inovação):** Mineração proprietária de dados (Scraping) de reviews reais do mercado brasileiro para explicar a *Causa Raiz* (Por que sai?) e sugerir ações de retenção.
 
-## 🚦 Próximos Passos (Semana 2)
-Com a "casa arrumada", documentação entregue (Tarefa 1) e arquitetura definida, estamos prontos para a fase de construção:  
-- **MVP Funcional**: Conectar a API Java com o modelo Python simples.  
-- **Infraestrutura**: Iniciar o planejamento para uso da Oracle Cloud (OCI).  
+#### 2. Arquitetura "Mock-First"
+* **Decisão:** O Backend Java não aguardará o modelo de IA estar pronto.
+* **Implementação:** Criaremos interfaces de serviço que retornam dados "Mocados" (Fictícios). Isso permite que o Frontend seja construído imediatamente. Quando a IA estiver pronta, apenas trocaremos a implementação da interface (via Spring Profiles).
 
-A NEXT HORIZON encerra esta semana com **100% das metas cumpridas**. Estamos construindo não apenas um software, mas uma equipe de alta performance.
+#### 3. Profissionalização do Workflow
+* Migração do projeto pessoal para uma **GitHub Organization**.
+* Adoção do **GitHub Projects (Kanban)** para gestão de tasks, saindo do informal para o rastreável.
 
-Seguimos firmes! 🚀  
+### 🛠️ Distribuição Tática (Sprint Backlog)
 
-**NEXT HORIZON | Inovação com Propósito.**  
+| Frente | Responsável | Missão Crítica da Semana |
+| :--- | :--- | :--- |
+| **Data Science** | **Vlademir** | Entregar o **Baseline Model** (Regressão Logística) usando dataset IBM Telco. *Status: MVP Entregue (Acurácia Validada).* |
+| **Backend** | **Raiuri / Lucas** | Estruturar DTOs, Endpoints e Contratos de API. Subir o esqueleto Spring Boot na Organization. |
+| **Mock Service** | **Felipe** | Implementar o serviço de previsão simulada para desbloquear o Frontend. |
+| **Intelligence** | **Philipe** | Mineração de dados não-estruturados (NLP) e orquestração da arquitetura híbrida. |
 
-*Relatório elaborado por Philipe Oliveira - Tech Lead & Integrador | Squad 17*
+---
+
+## 🗓️ SPRINT 00: Fundação, Arquitetura e Cultura (Demo Report)
+**Data:** 11 de Dezembro de 2025 | **Fase:** Setup & Team Building
+
+### 🚀 Resumo Executivo
+A Squad 17 (NEXT HORIZON) encerra sua primeira semana (Semana 0) com sentimento de dever cumprido! Realizamos nossa Sprint Demo consolidando nossa base técnica e alinhando nossa cultura de trabalho para o Hackathon ONE.
+
+### 🏆 Highlights da Semana
+
+#### 1. 🏗️ Fundação Técnica & Governança
+Sob a facilitação de Philipe Oliveira, estruturamos nossa "fábrica de software" adotando padrões de mercado desde o dia 1:
+* **Documentação Viva:** Aprovamos o `ONBOARDING.md` e elevamos o `README.md` ao nível de Whitepaper Técnico.
+* **Governança:** Regras de proteção de branch (`main`), Code Review obrigatório e Git Flow.
+* **Multidisciplinaridade:** Philipe (Tech Lead) atuando de ponta a ponta (Dados, Front e DevOps) para cobrir lacunas e garantir velocidade.
+
+#### 2. 🧠 Cultura de Inovação & AI-Driven
+Realizamos um brainstorming estratégico focado em **Agentic AI**. Decidimos que o ChurnInsight não será apenas um dashboard passivo, mas uma plataforma que gera planos de retenção autônomos.
+
+#### 3. 👥 Reconhecimento do Time
+* **Felipe & Lucas (Backend):** Pela iniciativa rápida no Spring Boot e disponibilidade para pair programming.
+* **Raiuri (Backend Lead):** Pela visão de arquitetura e liderança técnica no Java.
+* **Rômulo (Fullstack):** Pela visão híbrida apoiando a integração.
+* **Vlademir (Data Science):** Pela paixão na análise exploratória (EDA).
+
+---
+
+> *"Nossa meta não é apenas entregar software, é construir uma equipe de alta performance guiada por excelência e propósito."*
+>
+> **Assinado:** Philipe Oliveira - Tech Lead | Squad 17
