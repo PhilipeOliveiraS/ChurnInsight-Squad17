@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # MICROSERVIÇO DE INTELIGÊNCIA (Python/AI)
+  # ==========================================
+  churn-intelligence:
+    container_name: churn-core-api
+    
+    # Contexto de Build: Aponta para a pasta onde está o Dockerfile
+    build:
+      context: ./data-science
+      dockerfile: Dockerfile
+    
+    # Mapeamento de Portas (Host:Container)
+    ports:
+      - "8000:8000"
+    
+    # Injeção de Variáveis de Ambiente (Segurança)
+    # O arquivo .env deve estar dentro de data-science/
+    env_file:
+      - ./data-science/.env
+    
+    # Política de Resiliência (Se cair, levanta)
+    restart: unless-stopped
+    
+    # Monitoramento de Saúde (Healthcheck Nativo)
+    # O Docker vai pingar a API a cada 30s. Se falhar 3x, marca como 'unhealthy'.
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+    # Controle de Recursos (FinOps - Evita estourar memória na Cloud)
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+    
+    # Rede Isolada (Segurança de Rede)
+    networks:
+      - churn-network
+
+# Definição de Redes
+networks:
+  churn-network:
+    driver: bridge

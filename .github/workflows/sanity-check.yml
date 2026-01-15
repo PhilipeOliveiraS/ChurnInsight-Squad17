@@ -1,0 +1,40 @@
+name: Sanity Check
+
+# Quando rodar? Em todo Push na main ou Pull Request
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # JOB 1: DATA SCIENCE INTEGRITY
+  data-science-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout do Código
+        uses: actions/checkout@v4
+
+      - name: 🐳 Build Docker (Data Science)
+        # Tenta construir a imagem. Se o Dockerfile estiver errado, falha aqui.
+        run: |
+          cd data-science
+          docker build -t churn-api-test .
+
+      - name: 🐍 Setup Python (Para testes unitários)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 📦 Instalar Dependências e Rodar Pytest
+        # Roda os testes unitários (test_api.py) para garantir que a lógica não quebrou
+        run: |
+          cd data-science
+          pip install -r requirements.txt
+          pytest
+
+  # JOB 2: BACKEND INTEGRITY (Placeholder para o Java)
+  # backend-build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     ... (Configuração futura do Java)
