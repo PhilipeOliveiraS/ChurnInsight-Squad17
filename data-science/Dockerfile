@@ -1,26 +1,29 @@
-# Dockerfile atualizado para sua estrutura de pastas
 FROM python:3.10-slim
 
 WORKDIR /app
 
-# Instala dependências do sistema
+# Dependências de sistema
 RUN apt-get update && apt-get install -y libgomp1
 
-# 1. Copia e instala requisitos (da raiz data-science)
+# 1. Instalação de Pacotes
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 2. Copia a API (da pasta api para a raiz do container)
-COPY api/main.py .
+# 2. Copia Código Fonte
+COPY api/main.py api/main.py
+# Cria um arquivo __init__.py para tratar a raiz como pacote (truque para imports funcionarem)
+RUN touch __init__.py 
 
-# 3. Copia o Modelo (da pasta model para a raiz do container)
-COPY model/churn_model_final.pkl .
+# 3. Copia o Modelo
+COPY model/churn_model_final.pkl model/churn_model_final.pkl
 
-# 4. Copia o .env (da raiz data-science)
-COPY .env .
+# 4. --- NOVO: Copia a pasta de testes ---
+COPY tests/ tests/
 
-# Expõe a porta
+# 5. Variáveis
+# (O .env será injetado no run, não copiado)
+
 EXPOSE 8000
 
-# Roda a aplicação
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Comando padrão continua sendo subir a API
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
