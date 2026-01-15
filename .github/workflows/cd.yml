@@ -54,7 +54,7 @@ jobs:
             docker rm churninsight-ai || true
             docker run -d \
               --name churninsight-ai \
-              -p 8000:8000 \
+              --network churninsight_net \
               --env-file /opt/churn-insight/.env \
               ghcr.io/${{ env.OWNER_LOWER }}/churninsight-ai:latest
           EOF
